@@ -21,14 +21,19 @@
     <script>
         // 设置根路径
         const isGitHub = window.location.hostname.includes('github.io');
-        const rootPath = isGitHub ? "/Graduation_Project" : "";
-        // const rootPath = isGitHub ? "https://github.com/ningxinJ/ningxinJ.github.io/raw/main" : "";
+        // GitHub Pages路径
+        const githubPagesPath = "/Graduation_Project";
+        // GitHub raw内容路径
+        const githubRawPath = "https://raw.githubusercontent.com/ningxinJ/Graduation_Project/main";
+        // 设置根路径
+        const rootPath = isGitHub ? githubPagesPath : "";
         document.write(`<link rel="stylesheet" href="${isGitHub ? '/Graduation_Project/style.css' : 'style.css'}">`);
         // 添加调试信息
         console.log('Script loaded');
         console.log('Current hostname:', window.location.hostname);
         console.log('Is GitHub Pages:', isGitHub);
         console.log('Root path:', rootPath);
+        console.log('GitHub raw path:', githubRawPath);
         
         // 在页面加载完成后执行
         document.addEventListener('DOMContentLoaded', function() {
@@ -87,8 +92,12 @@
                 const currentSrc = video.getAttribute('src');
                 // 添加时间戳避免缓存问题
                 const timestamp = new Date().getTime();
-                // 修复：移除额外的斜杠，正确构建GitHub Pages路径
-                const finalSrc = isGitHub ? `${rootPath}/${currentSrc}?t=${timestamp}` : `${currentSrc}?t=${timestamp}`;
+                
+                // 使用GitHub raw链接
+                const finalSrc = isGitHub ? 
+                    `${githubRawPath}/${currentSrc}?t=${timestamp}` : 
+                    `${currentSrc}?t=${timestamp}`;
+                
                 console.log(`Setting video source ${index + 1}:`, finalSrc);
                 video.setAttribute('src', finalSrc);
                 
@@ -105,69 +114,14 @@
                         console.error(`❌ Error checking video file: ${finalSrc}`, error);
                     });
                 
-                // 标记视频的重试次数
+                // 添加简单的错误记录但不尝试重试
                 const videoElement = video.parentElement;
-                videoElement.setAttribute('data-retry-count', '0');
-                
-                // 添加错误处理
                 videoElement.addEventListener('error', function(e) {
-                    // 获取当前重试次数并增加
-                    const retryCount = parseInt(videoElement.getAttribute('data-retry-count') || '0');
-                    
-                    // 如果已经重试超过2次，不再尝试
-                    if (retryCount >= 2) {
-                        console.error(`已尝试加载视频 ${index + 1} ${retryCount}次，放弃重试`);
-                        return;
-                    }
-                    
-                    console.error(`Video ${index + 1} error (尝试 ${retryCount + 1}/3):`, {
+                    console.error(`Video ${index + 1} load error:`, {
                         error: videoElement.error,
-                        src: videoElement.querySelector('source')?.src || finalSrc,
-                        event: e
+                        src: finalSrc
                     });
-                    
-                    // 更新重试次数
-                    videoElement.setAttribute('data-retry-count', (retryCount + 1).toString());
-                    
-                    // 只有在第一次错误时尝试更改加载方式
-                    if (retryCount === 0) {
-                        console.log(`尝试重新加载视频 ${index + 1} 使用备用方法...`);
-                        
-                        // 方法1: 使用完整的URL
-                        const absoluteUrl = isGitHub ? 
-                            `https://ningxinj.github.io${rootPath}/${currentSrc}?retry=1&t=${new Date().getTime()}` : 
-                            `${window.location.origin}/${currentSrc}?retry=1&t=${new Date().getTime()}`;
-                        
-                        console.log(`尝试备用URL: ${absoluteUrl}`);
-                        
-                        // 移除当前错误监听器，防止死循环
-                        const currentErrorHandler = this;
-                        videoElement.removeEventListener('error', currentErrorHandler, true);
-                        
-                        // 创建新的source元素
-                        const newSource = document.createElement('source');
-                        newSource.setAttribute('src', absoluteUrl);
-                        newSource.setAttribute('type', 'video/mp4');
-                        
-                        // 清除当前的source元素
-                        while (videoElement.firstChild) {
-                            videoElement.removeChild(videoElement.firstChild);
-                        }
-                        
-                        // 添加新的source元素
-                        videoElement.appendChild(newSource);
-                        
-                        // 重新添加错误监听器
-                        videoElement.addEventListener('error', currentErrorHandler, true);
-                        
-                        // 重新加载视频
-                        try {
-                            videoElement.load();
-                        } catch (loadError) {
-                            console.error('视频重新加载失败:', loadError);
-                        }
-                    }
-                }, true); // 捕获阶段
+                }, true);
                 
                 // 添加加载状态监听
                 videoElement.addEventListener('loadeddata', function() {
@@ -180,14 +134,6 @@
                 
                 videoElement.addEventListener('canplay', function() {
                     console.log(`Video ${index + 1} can play`);
-                });
-                
-                videoElement.addEventListener('stalled', function() {
-                    console.log(`Video ${index + 1} stalled`);
-                });
-                
-                videoElement.addEventListener('suspend', function() {
-                    console.log(`Video ${index + 1} suspended`);
                 });
             });
         });
