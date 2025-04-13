@@ -41,13 +41,53 @@
             document.querySelectorAll('.video-overlay').forEach(overlay => {
                 overlay.style.backgroundColor = 'transparent';
                 overlay.style.pointerEvents = 'none';
+                overlay.style.display = 'none'; // 完全隐藏覆盖层
             });
+            
+            // 在GitHub Pages上检查所有视频文件
+            if (isGitHub) {
+                console.log("检查GitHub Pages上的所有视频文件:");
+                const allVideoPaths = [
+                    "/Graduation_Project/assets/chapter3/31_voca_name.mp4",
+                    "/Graduation_Project/assets/chapter3/31_biwi_name.mp4",
+                    "/Graduation_Project/assets/chapter3/32_voca_name.mp4",
+                    "/Graduation_Project/assets/chapter3/32_biwi_name.mp4",
+                    "/Graduation_Project/assets/chapter3/33_genetal.mp4",
+                    "/Graduation_Project/assets/chapter3/34_english.mp4",
+                    "/Graduation_Project/assets/chapter3/34_chinese.mp4",
+                    "/Graduation_Project/assets/chapter3/34_japanese.mp4",
+                    "/Graduation_Project/assets/chapter4/41_processdata.mp4",
+                    "/Graduation_Project/assets/chapter4/42_facial_micro.mp4",
+                    "/Graduation_Project/assets/chapter4/43_method_compare.mp4",
+                    "/Graduation_Project/assets/chapter4/44_cfg_name.mp4",
+                    "/Graduation_Project/assets/chapter5/51_man_woman.mp4",
+                    "/Graduation_Project/assets/chapter5/52_name.mp4",
+                    "/Graduation_Project/assets/chapter5/53_name.mp4"
+                ];
+                
+                // 检查所有文件
+                Promise.all(allVideoPaths.map(path => 
+                    fetch(path, { method: 'HEAD' })
+                        .then(response => ({ path, status: response.status, ok: response.ok }))
+                        .catch(error => ({ path, error: error.message, ok: false }))
+                )).then(results => {
+                    console.table(results);
+                    const missingFiles = results.filter(r => !r.ok);
+                    if (missingFiles.length > 0) {
+                        console.error(`❌ ${missingFiles.length} 个视频文件缺失!`);
+                    } else {
+                        console.log("✅ 所有视频文件已找到!");
+                    }
+                });
+            }
             
             // 为每个视频添加调试信息
             videos.forEach((video, index) => {
                 const currentSrc = video.getAttribute('src');
+                // 添加时间戳避免缓存问题
+                const timestamp = new Date().getTime();
                 // 修复：移除额外的斜杠，正确构建GitHub Pages路径
-                const finalSrc = isGitHub ? `${rootPath}/${currentSrc}` : currentSrc;
+                const finalSrc = isGitHub ? `${rootPath}/${currentSrc}?t=${timestamp}` : `${currentSrc}?t=${timestamp}`;
                 console.log(`Setting video source ${index + 1}:`, finalSrc);
                 video.setAttribute('src', finalSrc);
                 
@@ -65,31 +105,59 @@
                     });
                 
                 // 添加错误处理
-                video.parentElement.addEventListener('error', function(e) {
+                const videoElement = video.parentElement;
+                videoElement.addEventListener('error', function(e) {
                     console.error(`Video ${index + 1} error:`, {
-                        error: video.parentElement.error,
-                        src: finalSrc
+                        error: videoElement.error,
+                        src: finalSrc,
+                        event: e
                     });
+                    
+                    // 尝试使用不同的方法重新加载视频
+                    console.log(`尝试重新加载视频 ${index + 1} 使用备用方法...`);
+                    
+                    // 方法1: 使用完整的URL
+                    const absoluteUrl = isGitHub ? 
+                        `https://ningxinj.github.io${rootPath}/${currentSrc}?retry=1&t=${timestamp}` : 
+                        `${window.location.origin}/${currentSrc}?retry=1&t=${timestamp}`;
+                    
+                    console.log(`尝试备用URL: ${absoluteUrl}`);
+                    
+                    // 创建新的source元素
+                    const newSource = document.createElement('source');
+                    newSource.setAttribute('src', absoluteUrl);
+                    newSource.setAttribute('type', 'video/mp4');
+                    
+                    // 清除当前的source元素
+                    while (videoElement.firstChild) {
+                        videoElement.removeChild(videoElement.firstChild);
+                    }
+                    
+                    // 添加新的source元素
+                    videoElement.appendChild(newSource);
+                    
+                    // 重新加载视频
+                    videoElement.load();
                 }, true); // 捕获阶段
                 
                 // 添加加载状态监听
-                video.parentElement.addEventListener('loadeddata', function() {
+                videoElement.addEventListener('loadeddata', function() {
                     console.log(`Video ${index + 1} loaded data`);
                 });
                 
-                video.parentElement.addEventListener('loadedmetadata', function() {
+                videoElement.addEventListener('loadedmetadata', function() {
                     console.log(`Video ${index + 1} loaded metadata`);
                 });
                 
-                video.parentElement.addEventListener('canplay', function() {
+                videoElement.addEventListener('canplay', function() {
                     console.log(`Video ${index + 1} can play`);
                 });
                 
-                video.parentElement.addEventListener('stalled', function() {
+                videoElement.addEventListener('stalled', function() {
                     console.log(`Video ${index + 1} stalled`);
                 });
                 
-                video.parentElement.addEventListener('suspend', function() {
+                videoElement.addEventListener('suspend', function() {
                     console.log(`Video ${index + 1} suspended`);
                 });
             });
