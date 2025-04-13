@@ -22,6 +22,7 @@
         // 设置根路径
         const isGitHub = window.location.hostname.includes('github.io');
         const rootPath = isGitHub ? "/Graduation_Project" : "";
+        // const rootPath = isGitHub ? "https://github.com/ningxinJ/ningxinJ.github.io/raw/main" : "";
         document.write(`<link rel="stylesheet" href="${isGitHub ? '/Graduation_Project/style.css' : 'style.css'}">`);
         // 添加调试信息
         console.log('Script loaded');
@@ -104,40 +105,68 @@
                         console.error(`❌ Error checking video file: ${finalSrc}`, error);
                     });
                 
-                // 添加错误处理
+                // 标记视频的重试次数
                 const videoElement = video.parentElement;
+                videoElement.setAttribute('data-retry-count', '0');
+                
+                // 添加错误处理
                 videoElement.addEventListener('error', function(e) {
-                    console.error(`Video ${index + 1} error:`, {
+                    // 获取当前重试次数并增加
+                    const retryCount = parseInt(videoElement.getAttribute('data-retry-count') || '0');
+                    
+                    // 如果已经重试超过2次，不再尝试
+                    if (retryCount >= 2) {
+                        console.error(`已尝试加载视频 ${index + 1} ${retryCount}次，放弃重试`);
+                        return;
+                    }
+                    
+                    console.error(`Video ${index + 1} error (尝试 ${retryCount + 1}/3):`, {
                         error: videoElement.error,
-                        src: finalSrc,
+                        src: videoElement.querySelector('source')?.src || finalSrc,
                         event: e
                     });
                     
-                    // 尝试使用不同的方法重新加载视频
-                    console.log(`尝试重新加载视频 ${index + 1} 使用备用方法...`);
+                    // 更新重试次数
+                    videoElement.setAttribute('data-retry-count', (retryCount + 1).toString());
                     
-                    // 方法1: 使用完整的URL
-                    const absoluteUrl = isGitHub ? 
-                        `https://ningxinj.github.io${rootPath}/${currentSrc}?retry=1&t=${timestamp}` : 
-                        `${window.location.origin}/${currentSrc}?retry=1&t=${timestamp}`;
-                    
-                    console.log(`尝试备用URL: ${absoluteUrl}`);
-                    
-                    // 创建新的source元素
-                    const newSource = document.createElement('source');
-                    newSource.setAttribute('src', absoluteUrl);
-                    newSource.setAttribute('type', 'video/mp4');
-                    
-                    // 清除当前的source元素
-                    while (videoElement.firstChild) {
-                        videoElement.removeChild(videoElement.firstChild);
+                    // 只有在第一次错误时尝试更改加载方式
+                    if (retryCount === 0) {
+                        console.log(`尝试重新加载视频 ${index + 1} 使用备用方法...`);
+                        
+                        // 方法1: 使用完整的URL
+                        const absoluteUrl = isGitHub ? 
+                            `https://ningxinj.github.io${rootPath}/${currentSrc}?retry=1&t=${new Date().getTime()}` : 
+                            `${window.location.origin}/${currentSrc}?retry=1&t=${new Date().getTime()}`;
+                        
+                        console.log(`尝试备用URL: ${absoluteUrl}`);
+                        
+                        // 移除当前错误监听器，防止死循环
+                        const currentErrorHandler = this;
+                        videoElement.removeEventListener('error', currentErrorHandler, true);
+                        
+                        // 创建新的source元素
+                        const newSource = document.createElement('source');
+                        newSource.setAttribute('src', absoluteUrl);
+                        newSource.setAttribute('type', 'video/mp4');
+                        
+                        // 清除当前的source元素
+                        while (videoElement.firstChild) {
+                            videoElement.removeChild(videoElement.firstChild);
+                        }
+                        
+                        // 添加新的source元素
+                        videoElement.appendChild(newSource);
+                        
+                        // 重新添加错误监听器
+                        videoElement.addEventListener('error', currentErrorHandler, true);
+                        
+                        // 重新加载视频
+                        try {
+                            videoElement.load();
+                        } catch (loadError) {
+                            console.error('视频重新加载失败:', loadError);
+                        }
                     }
-                    
-                    // 添加新的source元素
-                    videoElement.appendChild(newSource);
-                    
-                    // 重新加载视频
-                    videoElement.load();
                 }, true); // 捕获阶段
                 
                 // 添加加载状态监听
@@ -176,14 +205,14 @@
             <div class="video-item">
                 <h3>基于音素-视素映射的两阶段网格数据集拟合对比实验</h3>
                 <div class="video-wrapper">
-                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="metadata">
                         <source src="assets/chapter3/31_voca_name.mp4" type="video/mp4">
                     </video>
                     <div class="video-overlay"></div>
                 </div>
                 <p class="video-caption">VOCASET-VISM数据集拟合结果</p>
                 <div class="video-wrapper">
-                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="metadata">
                         <source src="assets/chapter3/31_biwi_name.mp4" type="video/mp4">
                     </video>
                     <div class="video-overlay"></div>
@@ -193,7 +222,7 @@
             <div class="video-item">
                 <h3>VOCASET-VISM与BIWI-VISM数据集网络对比结果可视化结果</h3>
                 <div class="video-wrapper">
-                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="metadata">
                         <source src="assets/chapter3/32_voca_name.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -201,7 +230,7 @@
                 </div>
                 <p class="video-caption">VOCASET-VISM数据集方法对比</p>
                 <div class="video-wrapper">
-                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="metadata">
                         <source src="assets/chapter3/32_biwi_name.mp4" type="video/mp4">
                     </video>
                     <div class="video-overlay"></div>
