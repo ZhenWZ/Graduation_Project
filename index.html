@@ -6,7 +6,7 @@
     <title>Graduation Project</title>
     <script>
         // 设置基础路径
-        const root_pth = "/Graduation_Project";
+        const root_pth = "https://github.com/ningxinJ/Graduation_Project/tree/main";
         const isGitHub = window.location.hostname === 'ningxinj.github.io';
         
         // 动态设置样式表路径
@@ -23,6 +23,11 @@
                 e.preventDefault();
             }
         });
+
+        // 添加调试信息
+        console.log('Current hostname:', window.location.hostname);
+        console.log('Is GitHub:', isGitHub);
+        console.log('Root path:', root_pth);
     </script>
 </head>
 <body>
@@ -32,7 +37,7 @@
             <div class="video-item">
                 <h3>基于音素-视素映射的两阶段网格数据集拟合对比实验</h3>
                 <div class="video-wrapper">
-                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter3/31_voca_name.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -40,7 +45,7 @@
                 </div>
                 <p class="video-caption">VOCASET-VISM数据集拟合结果</p>
                 <div class="video-wrapper">
-                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter3/31_biwi_name.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -51,7 +56,7 @@
             <div class="video-item">
                 <h3>VOCASET-VISM与BIWI-VISM数据集网络对比结果可视化结果</h3>
                 <div class="video-wrapper">
-                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter3/32_voca_name.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -59,7 +64,7 @@
                 </div>
                 <p class="video-caption">VOCASET-VISM数据集方法对比</p>
                 <div class="video-wrapper">
-                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter3/32_biwi_name.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -72,7 +77,7 @@
             <div class="video-item">
                 <h3>泛化性对比结果可视化</h3>
                 <div class="video-wrapper">
-                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter3/33_genetal.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -86,7 +91,7 @@
                 <div class="sequential-videos">
                     <div class="video-with-caption">
                         <div class="video-wrapper">
-                            <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                            <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                                 <source src="assets/chapter3/34_english.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -96,7 +101,7 @@
                     </div>
                     <div class="video-with-caption">
                         <div class="video-wrapper">
-                            <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                            <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                                 <source src="assets/chapter3/34_chinese.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -106,7 +111,7 @@
                     </div>
                     <div class="video-with-caption">
                         <div class="video-wrapper">
-                            <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                            <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                                 <source src="assets/chapter3/34_japanese.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -125,7 +130,7 @@
             <div class="video-item">
                 <h3>Blend-TFHP数据处理结果</h3>
                 <div class="video-wrapper">
-                    <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                    <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter4/41_processdata.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -135,7 +140,7 @@
             <div class="video-item">
                 <h3>面部表现Unreal Engine MetaHuman可视化</h3>
                 <div class="video-wrapper">
-                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter4/42_facial_micro.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -147,7 +152,7 @@
             <div class="video-item">
                 <h3>不同方法对比定性分析可视化及结果分析</h3>
                 <div class="video-wrapper">
-                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter4/43_method_compare.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -159,7 +164,7 @@
             <div class="video-item">
                 <h3>无分类指导器权重大小控制探究</h3>
                 <div class="video-wrapper">
-                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter4/44_cfg_name.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -175,7 +180,7 @@
             <div class="video-item">
                 <h3>三维网格驱动的二维肖像动画生成结果可视化</h3>
                 <div class="video-wrapper">
-                    <video class="video-medium" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                    <video class="video-medium" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter5/51_man_woman.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -185,7 +190,7 @@
             <div class="video-item">
                 <h3>对比方法可视化</h3>
                 <div class="video-wrapper">
-                    <video class="video-medium" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                    <video class="video-medium" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter5/52_name.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -197,7 +202,7 @@
             <div class="video-item">
                 <h3>结果可视化及分析</h3>
                 <div class="video-wrapper">
-                    <video class="video-medium" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                    <video class="video-medium" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter5/53_name.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -215,7 +220,18 @@
                 const currentSrc = video.getAttribute('src');
                 // 根据当前环境选择使用哪个路径
                 const finalSrc = isGitHub ? root_pth + '/' + currentSrc : currentSrc;
+                console.log('Setting video source:', finalSrc);
                 video.setAttribute('src', finalSrc);
+                
+                // 添加错误处理
+                video.parentElement.addEventListener('error', function(e) {
+                    console.error('Video error:', e);
+                });
+                
+                // 添加加载状态监听
+                video.parentElement.addEventListener('loadedmetadata', function() {
+                    console.log('Video metadata loaded:', finalSrc);
+                });
             });
         });
     </script>
