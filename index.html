@@ -4,14 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graduation Project</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+        /* 确保视频覆盖层不会导致灰色遮罩 */
+        .video-overlay {
+            background-color: transparent !important;
+            pointer-events: none;
+        }
+        
+        /* 确保视频能正常显示 */
+        video {
+            z-index: 2;
+            position: relative;
+        }
+    </style>
     <script>
         // 设置根路径
-        const rootPath = "https://ningxinj.github.io/Graduation_Project";
-        
+        const isGitHub = window.location.hostname.includes('github.io');
+        const rootPath = isGitHub ? "/Graduation_Project" : "";
+        document.write(`<link rel="stylesheet" href="${isGitHub ? '/Graduation_Project/style.css' : 'style.css'}">`);
         // 添加调试信息
         console.log('Script loaded');
         console.log('Current hostname:', window.location.hostname);
-        console.log('Is GitHub Pages:', window.location.hostname.includes('github.io'));
+        console.log('Is GitHub Pages:', isGitHub);
         console.log('Root path:', rootPath);
         
         // 在页面加载完成后执行
@@ -22,12 +37,32 @@
             const videos = document.querySelectorAll('video source');
             console.log('Found videos:', videos.length);
             
+            // 移除所有可能导致灰色覆盖的视频覆盖层
+            document.querySelectorAll('.video-overlay').forEach(overlay => {
+                overlay.style.backgroundColor = 'transparent';
+                overlay.style.pointerEvents = 'none';
+            });
+            
             // 为每个视频添加调试信息
             videos.forEach((video, index) => {
                 const currentSrc = video.getAttribute('src');
-                const finalSrc = rootPath + '/' + currentSrc;
+                // 修复：移除额外的斜杠，正确构建GitHub Pages路径
+                const finalSrc = isGitHub ? `${rootPath}/${currentSrc}` : currentSrc;
                 console.log(`Setting video source ${index + 1}:`, finalSrc);
                 video.setAttribute('src', finalSrc);
+                
+                // 检查视频文件是否存在
+                fetch(finalSrc, { method: 'HEAD' })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log(`✅ Video file exists: ${finalSrc}`);
+                        } else {
+                            console.error(`❌ Video file NOT found (${response.status}): ${finalSrc}`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(`❌ Error checking video file: ${finalSrc}`, error);
+                    });
                 
                 // 添加错误处理
                 video.parentElement.addEventListener('error', function(e) {
@@ -35,7 +70,7 @@
                         error: video.parentElement.error,
                         src: finalSrc
                     });
-                });
+                }, true); // 捕获阶段
                 
                 // 添加加载状态监听
                 video.parentElement.addEventListener('loadeddata', function() {
@@ -75,7 +110,6 @@
                 <div class="video-wrapper">
                     <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter3/31_voca_name.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
                     <div class="video-overlay"></div>
                 </div>
@@ -83,7 +117,6 @@
                 <div class="video-wrapper">
                     <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter3/31_biwi_name.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
                     <div class="video-overlay"></div>
                 </div>
@@ -102,7 +135,6 @@
                 <div class="video-wrapper">
                     <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter3/32_biwi_name.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
                     <div class="video-overlay"></div>
                 </div>
@@ -115,7 +147,6 @@
                 <div class="video-wrapper">
                     <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter3/33_genetal.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
                     <div class="video-overlay"></div>
                 </div>
@@ -129,7 +160,6 @@
                         <div class="video-wrapper">
                             <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                                 <source src="assets/chapter3/34_english.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
                             </video>
                             <div class="video-overlay"></div>
                         </div>
@@ -149,7 +179,6 @@
                         <div class="video-wrapper">
                             <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                                 <source src="assets/chapter3/34_japanese.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
                             </video>
                             <div class="video-overlay"></div>
                         </div>
@@ -178,8 +207,7 @@
                 <div class="video-wrapper">
                     <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter4/42_facial_micro.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                    </video>    
                     <div class="video-overlay"></div>
                 </div>
             </div>
@@ -190,7 +218,6 @@
                 <div class="video-wrapper">
                     <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter4/43_method_compare.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
                     <div class="video-overlay"></div>
                 </div>
@@ -202,7 +229,6 @@
                 <div class="video-wrapper">
                     <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter4/44_cfg_name.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
                     <div class="video-overlay"></div>
                 </div>
@@ -218,7 +244,6 @@
                 <div class="video-wrapper">
                     <video class="video-medium" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter5/51_man_woman.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
                     <div class="video-overlay"></div>
                 </div>
@@ -228,7 +253,6 @@
                 <div class="video-wrapper">
                     <video class="video-medium" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter5/52_name.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
                     <div class="video-overlay"></div>
                 </div>
@@ -240,7 +264,6 @@
                 <div class="video-wrapper">
                     <video class="video-medium" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                         <source src="assets/chapter5/53_name.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
                     <div class="video-overlay"></div>
                 </div>
