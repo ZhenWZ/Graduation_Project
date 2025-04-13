@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <title>Graduation Project Demo</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        // 禁用右键菜单
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // 禁用视频下载
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+                e.preventDefault();
+            }
+        });
+    </script>
 </head>
 <body>
     <section id="chapter3">
@@ -11,26 +24,53 @@
         <div class="video-container">
             <div class="video-item">
                 <h3>基于音素-视素映射的两阶段网格数据集拟合对比实验</h3>
-                <video width="640" controls>
-                    <source src="assets/chapter3/video1.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                <div class="video-wrapper">
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                        <source src="assets/chapter3/31_voca_name.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay"></div>
+                </div>
+                <p class="video-caption">VOCASET-VISM数据集拟合结果</p>
+                <div class="video-wrapper">
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                        <source src="assets/chapter3/31_biwi_name.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay"></div>
+                </div>
+                <p class="video-caption">BIWI-VISM数据集拟合结果</p>
             </div>
             <div class="video-item">
                 <h3>VOCASET-VISM与BIWI-VISM数据集网络对比结果可视化结果</h3>
-                <video width="640" controls>
-                    <source src="assets/chapter3/video2.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                <div class="video-wrapper">
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                        <source src="assets/chapter3/32_voca_name.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay"></div>
+                </div>
+                <p class="video-caption">VOCASET-VISM数据集方法对比</p>
+                <div class="video-wrapper">
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                        <source src="assets/chapter3/32_biwi_name.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay"></div>
+                </div>
+                <p class="video-caption">BIWI-VISM数据集方法对比</p>
             </div>
         </div>
         <div class="video-container">
             <div class="video-item">
                 <h3>泛化性对比结果可视化</h3>
-                <video width="640" controls>
-                    <source src="assets/chapter3/video3.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                <div class="video-wrapper">
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                        <source src="assets/chapter3/33_genetal.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay"></div>
+                </div>
             </div>
         </div>
         <div class="video-container">
@@ -38,24 +78,33 @@
                 <h3>泛化性多语言测试</h3>
                 <div class="sequential-videos">
                     <div class="video-with-caption">
-                        <video width="640" controls>
-                            <source src="assets/chapter3/video4_1.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        <div class="video-wrapper">
+                            <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                                <source src="assets/chapter3/34_english.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
                         <p class="video-caption">英语测试</p>
                     </div>
                     <div class="video-with-caption">
-                        <video width="640" controls>
-                            <source src="assets/chapter3/video4_2.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        <div class="video-wrapper">
+                            <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                                <source src="assets/chapter3/34_chinese.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
                         <p class="video-caption">中文测试</p>
                     </div>
                     <div class="video-with-caption">
-                        <video width="640" controls>
-                            <source src="assets/chapter3/video4_3.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        <div class="video-wrapper">
+                            <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                                <source src="assets/chapter3/34_japanese.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
                         <p class="video-caption">日语测试</p>
                     </div>
                 </div>
@@ -68,35 +117,47 @@
         <div class="video-container">
             <div class="video-item">
                 <h3>Blend-TFHP数据处理结果</h3>
-                <video width="640" controls>
-                    <source src="assets/chapter4/video1.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                <div class="video-wrapper">
+                    <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                        <source src="assets/chapter4/41_processdata.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay"></div>
+                </div>
             </div>
             <div class="video-item">
                 <h3>面部表现Unreal Engine MetaHuman可视化</h3>
-                <video width="640" controls>
-                    <source src="assets/chapter4/video2.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                <div class="video-wrapper">
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                        <source src="assets/chapter4/42_facial_micro.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay"></div>
+                </div>
             </div>
         </div>
         <div class="video-container">
             <div class="video-item">
                 <h3>不同方法对比定性分析可视化及结果分析</h3>
-                <video width="640" controls>
-                    <source src="assets/chapter4/video3.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                <div class="video-wrapper">
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                        <source src="assets/chapter4/43_method_compare.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay"></div>
+                </div>
             </div>
         </div>
         <div class="video-container">
             <div class="video-item">
                 <h3>无分类指导器权重大小控制探究</h3>
-                <video width="640" controls>
-                    <source src="assets/chapter4/video4.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                <div class="video-wrapper">
+                    <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                        <source src="assets/chapter4/44_cfg_name.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -106,26 +167,35 @@
         <div class="video-container">
             <div class="video-item">
                 <h3>三维网格驱动的二维肖像动画生成结果可视化</h3>
-                <video width="640" controls>
-                    <source src="assets/chapter5/video1.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                <div class="video-wrapper">
+                    <video class="video-medium" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                        <source src="assets/chapter5/51_man_woman.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay"></div>
+                </div>
             </div>
             <div class="video-item">
                 <h3>对比方法可视化</h3>
-                <video width="640" controls>
-                    <source src="assets/chapter5/video2.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                <div class="video-wrapper">
+                    <video class="video-medium" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                        <source src="assets/chapter5/52_name.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay"></div>
+                </div>
             </div>
         </div>
         <div class="video-container">
             <div class="video-item">
                 <h3>结果可视化及分析</h3>
-                <video width="640" controls>
-                    <source src="assets/chapter5/video3.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                <div class="video-wrapper">
+                    <video class="video-medium" width="640" controls controlsList="nodownload" disablePictureInPicture>
+                        <source src="assets/chapter5/53_name.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay"></div>
+                </div>
             </div>
         </div>
     </section>
