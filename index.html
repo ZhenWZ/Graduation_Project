@@ -5,29 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graduation Project</title>
     <script>
-        // 设置基础路径
-        const root_pth = "https://github.com/ningxinJ/Graduation_Project/tree/main";
-        const isGitHub = window.location.hostname === 'ningxinj.github.io';
+        // 设置根路径
+        const rootPath = "https://ningxinj.github.io/Graduation_Project";
         
-        // 动态设置样式表路径
-        document.write(`<link rel="stylesheet" href="${isGitHub ? '/Graduation_Project/style.css' : 'style.css'}">`);
-        
-        // 禁用右键菜单
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        // 禁用视频下载
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
-                e.preventDefault();
-            }
-        });
-
         // 添加调试信息
+        console.log('Script loaded');
         console.log('Current hostname:', window.location.hostname);
-        console.log('Is GitHub:', isGitHub);
-        console.log('Root path:', root_pth);
+        console.log('Is GitHub Pages:', window.location.hostname.includes('github.io'));
+        console.log('Root path:', rootPath);
+        
+        // 在页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded');
+            
+            // 获取所有视频元素
+            const videos = document.querySelectorAll('video source');
+            console.log('Found videos:', videos.length);
+            
+            // 为每个视频添加调试信息
+            videos.forEach((video, index) => {
+                const currentSrc = video.getAttribute('src');
+                const finalSrc = rootPath + '/' + currentSrc;
+                console.log(`Setting video source ${index + 1}:`, finalSrc);
+                video.setAttribute('src', finalSrc);
+                
+                // 添加错误处理
+                video.parentElement.addEventListener('error', function(e) {
+                    console.error(`Video ${index + 1} error:`, {
+                        error: video.parentElement.error,
+                        src: finalSrc
+                    });
+                });
+                
+                // 添加加载状态监听
+                video.parentElement.addEventListener('loadeddata', function() {
+                    console.log(`Video ${index + 1} loaded data`);
+                });
+                
+                video.parentElement.addEventListener('loadedmetadata', function() {
+                    console.log(`Video ${index + 1} loaded metadata`);
+                });
+                
+                video.parentElement.addEventListener('canplay', function() {
+                    console.log(`Video ${index + 1} can play`);
+                });
+                
+                video.parentElement.addEventListener('stalled', function() {
+                    console.log(`Video ${index + 1} stalled`);
+                });
+                
+                video.parentElement.addEventListener('suspend', function() {
+                    console.log(`Video ${index + 1} suspended`);
+                });
+            });
+        });
+        
+        // 添加页面加载错误处理
+        window.addEventListener('error', function(e) {
+            console.error('Page error:', e);
+        });
     </script>
 </head>
 <body>
@@ -211,29 +247,5 @@
             </div>
         </div>
     </section>
-
-    <script>
-        // 动态设置所有视频的源路径
-        document.addEventListener('DOMContentLoaded', function() {
-            const videos = document.querySelectorAll('video source');
-            videos.forEach(video => {
-                const currentSrc = video.getAttribute('src');
-                // 根据当前环境选择使用哪个路径
-                const finalSrc = isGitHub ? root_pth + '/' + currentSrc : currentSrc;
-                console.log('Setting video source:', finalSrc);
-                video.setAttribute('src', finalSrc);
-                
-                // 添加错误处理
-                video.parentElement.addEventListener('error', function(e) {
-                    console.error('Video error:', e);
-                });
-                
-                // 添加加载状态监听
-                video.parentElement.addEventListener('loadedmetadata', function() {
-                    console.log('Video metadata loaded:', finalSrc);
-                });
-            });
-        });
-    </script>
 </body>
 </html>
