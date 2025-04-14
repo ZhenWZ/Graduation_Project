@@ -57,9 +57,9 @@
                 // 添加时间戳避免缓存问题
                 const timestamp = new Date().getTime();
                 
-                // 使用GitHub raw链接
+                // 在GitHub Pages上，优先使用GitHub Pages路径
                 const finalSrc = isGitHub ? 
-                    `${githubRawPath}/${currentSrc}?t=${timestamp}` : 
+                    `${githubPagesPath}/${currentSrc}?t=${timestamp}` : 
                     `${currentSrc}?t=${timestamp}`;
                 
                 console.log(`Setting video source ${index + 1}:`, finalSrc);
@@ -74,7 +74,7 @@
                             console.error(`❌ Video file NOT found (${response.status}): ${finalSrc}`);
                             // 尝试使用备用路径
                             const fallbackSrc = isGitHub ? 
-                                `${githubPagesPath}/${currentSrc}?t=${timestamp}` : 
+                                `${githubRawPath}/${currentSrc}?t=${timestamp}` : 
                                 finalSrc;
                             console.log(`Trying fallback path: ${fallbackSrc}`);
                             video.setAttribute('src', fallbackSrc);
@@ -84,7 +84,7 @@
                         console.error(`❌ Error checking video file: ${finalSrc}`, error);
                         // 尝试使用备用路径
                         const fallbackSrc = isGitHub ? 
-                            `${githubPagesPath}/${currentSrc}?t=${timestamp}` : 
+                            `${githubRawPath}/${currentSrc}?t=${timestamp}` : 
                             finalSrc;
                         console.log(`Trying fallback path: ${fallbackSrc}`);
                         video.setAttribute('src', fallbackSrc);
@@ -99,7 +99,7 @@
                     });
                     // 尝试使用备用路径
                     const fallbackSrc = isGitHub ? 
-                        `${githubPagesPath}/${currentSrc}?t=${timestamp}` : 
+                        `${githubRawPath}/${currentSrc}?t=${timestamp}` : 
                         finalSrc;
                     console.log(`Trying fallback path after error: ${fallbackSrc}`);
                     video.setAttribute('src', fallbackSrc);
