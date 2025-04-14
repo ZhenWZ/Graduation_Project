@@ -23,8 +23,6 @@
         const isGitHub = window.location.hostname.includes('github.io');
         // GitHub Pages路径
         const githubPagesPath = "/Graduation_Project";
-        // GitHub raw内容路径
-        const githubRawPath = "https://raw.githubusercontent.com/ningxinJ/Graduation_Project/main";
         // 设置根路径
         const rootPath = isGitHub ? githubPagesPath : "";
         document.write(`<link rel="stylesheet" href="${isGitHub ? '/Graduation_Project/style.css' : 'style.css'}">`);
@@ -34,7 +32,6 @@
         console.log('Current hostname:', window.location.hostname);
         console.log('Is GitHub Pages:', isGitHub);
         console.log('Root path:', rootPath);
-        console.log('GitHub raw path:', githubRawPath);
         
         // 在页面加载完成后执行
         document.addEventListener('DOMContentLoaded', function() {
@@ -57,38 +54,13 @@
                 // 添加时间戳避免缓存问题
                 const timestamp = new Date().getTime();
                 
-                // 在GitHub Pages上，优先使用GitHub Pages路径
+                // 在GitHub Pages上使用正确的路径
                 const finalSrc = isGitHub ? 
                     `${githubPagesPath}/${currentSrc}?t=${timestamp}` : 
                     `${currentSrc}?t=${timestamp}`;
                 
                 console.log(`Setting video source ${index + 1}:`, finalSrc);
                 video.setAttribute('src', finalSrc);
-                
-                // 检查视频文件是否存在
-                fetch(finalSrc, { method: 'HEAD' })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log(`✅ Video file exists: ${finalSrc}`);
-                        } else {
-                            console.error(`❌ Video file NOT found (${response.status}): ${finalSrc}`);
-                            // 尝试使用备用路径
-                            const fallbackSrc = isGitHub ? 
-                                `${githubRawPath}/${currentSrc}?t=${timestamp}` : 
-                                finalSrc;
-                            console.log(`Trying fallback path: ${fallbackSrc}`);
-                            video.setAttribute('src', fallbackSrc);
-                        }
-                    })
-                    .catch(error => {
-                        console.error(`❌ Error checking video file: ${finalSrc}`, error);
-                        // 尝试使用备用路径
-                        const fallbackSrc = isGitHub ? 
-                            `${githubRawPath}/${currentSrc}?t=${timestamp}` : 
-                            finalSrc;
-                        console.log(`Trying fallback path: ${fallbackSrc}`);
-                        video.setAttribute('src', fallbackSrc);
-                    });
                 
                 // 添加错误处理
                 const videoElement = video.parentElement;
@@ -97,12 +69,6 @@
                         error: videoElement.error,
                         src: finalSrc
                     });
-                    // 尝试使用备用路径
-                    const fallbackSrc = isGitHub ? 
-                        `${githubRawPath}/${currentSrc}?t=${timestamp}` : 
-                        finalSrc;
-                    console.log(`Trying fallback path after error: ${fallbackSrc}`);
-                    video.setAttribute('src', fallbackSrc);
                 }, true);
                 
                 // 添加加载状态监听
