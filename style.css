@@ -124,9 +124,11 @@ h3 {
     margin: 1rem 0;
     border-radius: 8px;
     overflow: hidden;
-    background-color: #000;
     display: inline-block;
     max-width: 100%;
+    background-color: transparent;
+    width: 100%;
+    padding: 0;
 }
 
 video {
@@ -137,6 +139,8 @@ video {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     display: block;
     margin: 0 auto;
+    background-color: #000;
+    object-fit: contain;
 }
 
 /* Remove fixed width classes */
@@ -205,7 +209,11 @@ video {
 
 /* Video controls customization */
 video::-webkit-media-controls {
-    background-color: rgba(0,0,0,0.5);
+    background-color: transparent !important;
+}
+
+video::-webkit-media-controls-panel {
+    background-color: rgba(0,0,0,0.5) !important;
 }
 
 video::-webkit-media-controls-play-button,
@@ -221,4 +229,40 @@ video::-webkit-media-controls-volume-slider {
 video::-webkit-media-controls-fullscreen-button,
 video::-webkit-media-controls-download-button {
     display: none;
+}
+
+/* Video poster styling */
+video::-webkit-media-controls-poster {
+    background-color: #000;
+}
+
+video::-webkit-media-controls-start-playback-button {
+    display: none;
+}
+
+/* Fix hover state */
+video:hover::-webkit-media-controls-panel {
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+video:hover {
+    background-color: #222 !important;
+}
+
+.video-small {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    display: block;
+    margin: 0 auto;
+    background-color: transparent;
+}
+
+.video-medium {
+    width: 100%;
+    height: auto;
+    max-width: 600px;
+    display: block;
+    margin: 0 auto;
+    background-color: transparent;
 }

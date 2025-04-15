@@ -6,16 +6,11 @@
     <title>硕士学位论文 - 音频驱动三维人脸动画生成研究</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* 确保视频覆盖层不会导致灰色遮罩 */
-        .video-overlay {
-            background-color: transparent !important;
-            pointer-events: none;
-        }
-        
         /* 确保视频能正常显示 */
         video {
             z-index: 2;
             position: relative;
+            background-color: #000;
         }
     </style>
     <script>
@@ -40,13 +35,6 @@
             // 获取所有视频元素
             const videos = document.querySelectorAll('video source');
             console.log('Found videos:', videos.length);
-            
-            // 移除所有可能导致灰色覆盖的视频覆盖层
-            document.querySelectorAll('.video-overlay').forEach(overlay => {
-                overlay.style.backgroundColor = 'transparent';
-                overlay.style.pointerEvents = 'none';
-                overlay.style.display = 'none'; // 完全隐藏覆盖层
-            });
             
             // 为每个视频添加调试信息
             videos.forEach((video, index) => {
@@ -109,14 +97,12 @@
                         <video class="video-large" controls controlsList="nodownload" disablePictureInPicture preload="metadata">
                             <source src="assets/chapter3/31_voca_name.mp4" type="video/mp4">
                         </video>
-                        <div class="video-overlay"></div>
                     </div>
                     <p class="video-caption">VOCASET-VISM Dataset Fitting Results</p>
                     <div class="video-wrapper">
                         <video class="video-large" controls controlsList="nodownload" disablePictureInPicture preload="metadata">
                             <source src="assets/chapter3/31_biwi_name.mp4" type="video/mp4">
                         </video>
-                        <div class="video-overlay"></div>
                     </div>
                     <p class="video-caption">BIWI-VISM Dataset Fitting Results</p>
                 </div>
@@ -127,14 +113,12 @@
                             <source src="assets/chapter3/32_voca_name.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                        <div class="video-overlay"></div>
                     </div>
                     <p class="video-caption">VOCASET-VISM数据集方法对比</p>
                     <div class="video-wrapper">
                         <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="metadata">
                             <source src="assets/chapter3/32_biwi_name.mp4" type="video/mp4">
                         </video>
-                        <div class="video-overlay"></div>
                     </div>
                     <p class="video-caption">BIWI-VISM数据集方法对比</p>
                 </div>
@@ -146,7 +130,6 @@
                         <video class="video-large" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                             <source src="assets/chapter3/33_genetal.mp4" type="video/mp4">
                         </video>
-                        <div class="video-overlay"></div>
                     </div>
                 </div>
             </div>
@@ -159,7 +142,6 @@
                                 <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                                     <source src="assets/chapter3/34_english.mp4" type="video/mp4">
                                 </video>
-                                <div class="video-overlay"></div>
                             </div>
                             <p class="video-caption">英语测试</p>
                         </div>
@@ -169,7 +151,6 @@
                                     <source src="assets/chapter3/34_chinese.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <div class="video-overlay"></div>
                             </div>
                             <p class="video-caption">中文测试</p>
                         </div>
@@ -178,7 +159,6 @@
                                 <video class="video-small" width="640" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                                     <source src="assets/chapter3/34_japanese.mp4" type="video/mp4">
                                 </video>
-                                <div class="video-overlay"></div>
                             </div>
                             <p class="video-caption">日语测试</p>
                         </div>
@@ -197,7 +177,6 @@
                             <source src="assets/chapter4/41_processdata.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                        <div class="video-overlay"></div>
                     </div>
                 </div>
                 <div class="video-item">
@@ -206,7 +185,6 @@
                         <video class="video-large" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                             <source src="assets/chapter4/42_facial_micro.mp4" type="video/mp4">
                         </video>    
-                        <div class="video-overlay"></div>
                     </div>
                 </div>
             </div>
@@ -217,7 +195,6 @@
                         <video class="video-large" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                             <source src="assets/chapter4/43_method_compare.mp4" type="video/mp4">
                         </video>
-                        <div class="video-overlay"></div>
                     </div>
                 </div>
             </div>
@@ -228,7 +205,6 @@
                         <video class="video-large" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                             <source src="assets/chapter4/44_cfg_name.mp4" type="video/mp4">
                         </video>
-                        <div class="video-overlay"></div>
                     </div>
                 </div>
             </div>
@@ -243,7 +219,6 @@
                         <video class="video-medium" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                             <source src="assets/chapter5/51_man_woman.mp4" type="video/mp4">
                         </video>
-                        <div class="video-overlay"></div>
                     </div>
                 </div>
                 <div class="video-item">
@@ -252,7 +227,6 @@
                         <video class="video-medium" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                             <source src="assets/chapter5/52_name.mp4" type="video/mp4">
                         </video>
-                        <div class="video-overlay"></div>
                     </div>
                 </div>
             </div>
@@ -260,10 +234,9 @@
                 <div class="video-item">
                     <h3>结果可视化及分析</h3>
                     <div class="video-wrapper">
-                        <video class="video-medium" controls controlsList="nodownload" disablePictureInPicture preload="auto">
+                        <video class="video-large" controls controlsList="nodownload" disablePictureInPicture preload="auto">
                             <source src="assets/chapter5/53_name.mp4" type="video/mp4">
                         </video>
-                        <div class="video-overlay"></div>
                     </div>
                 </div>
             </div>
